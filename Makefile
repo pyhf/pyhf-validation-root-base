@@ -26,9 +26,7 @@ test:
 	# Import order safe
 	docker run \
 		--rm \
+		-v $(shell pwd):$(shell pwd) \
+		-w $(shell pwd) \
 		pyhf/pyhf-validation-root-base:latest \
-		-c "python -m pip install numpy; python -c 'import numpy as np; import ROOT; print(np.arange(10))'"
-	docker run \
-		--rm \
-		pyhf/pyhf-validation-root-base:latest \
-		-c "python -m pip install numpy; python -c 'import ROOT; import numpy as np; print(np.arange(10))'"
+		-c "python -m pip install numpy; python tests/test_import_numpy_ROOT.py; python tests/test_import_ROOT_numpy.py"

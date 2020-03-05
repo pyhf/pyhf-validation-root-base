@@ -24,3 +24,5 @@ jobs:
     - name: Run tests
       run: |
         docker run --rm -v $PWD:$PWD -w $PWD pyhf/pyhf-validation-root-base:$GITHUB_SHA -c "python tests/rf308_normintegration2d.py"
+        docker run --rm -v $PWD:$PWD -w $PWD pyhf/pyhf-validation-root-base:$GITHUB_SHA -c "python -m pip install numpy; python tests/test_import_numpy_ROOT.py"
+        docker run --rm -v $PWD:$PWD -w $PWD pyhf/pyhf-validation-root-base:$GITHUB_SHA -c "python -m pip install numpy; python tests/test_import_ROOT_numpy.py"
