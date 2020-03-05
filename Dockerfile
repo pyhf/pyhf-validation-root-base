@@ -41,7 +41,7 @@ RUN mkdir code && \
       -Dpython=ON \
       -DPYTHON_EXECUTABLE=$(which python3) \
       -DPYTHON_INCLUDE_DIR=$(python3 -c "from distutils import sysconfig; print(sysconfig.get_python_inc(True))") \
-      -DPYTHON_LIBRARY=$(python3 -c "from distutils import sysconfig; print(sysconfig.get_config_var('LIBDIR'))") \
+      -DPYTHON_LIBRARY=$(python3 -c "from distutils import sysconfig; print(sysconfig.get_config_var('LIBDIR')+'/libpython3.7m.so')") \
       -DCMAKE_INSTALL_PREFIX=/usr/local \
       ../root-${ROOT_VERSION} && \
     cmake --build . -- -j$(($(nproc) - 1)) && \
