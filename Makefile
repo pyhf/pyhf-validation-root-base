@@ -16,6 +16,7 @@ run:
 
 test:
 	# Can run RooFit
+	# https://github.com/root-project/root/blob/master/tutorials/roofit/rf202_extendedmlfit.py
 	docker run \
 		--rm \
 		-v $(shell pwd):$(shell pwd) \
