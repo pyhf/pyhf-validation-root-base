@@ -1,0 +1,26 @@
+name: CI/CD
+
+on:
+  push:
+  schedule:
+  - cron:  '1 0 * * *'
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@master
+    - name: Build Docker image
+      run: |
+        docker build . \
+          --file Dockerfile \
+          --build-arg BASE_IMAGE=python:3.7-slim \
+          --build-arg ROOT_VERSION=6.20.00 \
+          --tag pyhf/pyhf-validation-root-base:$GITHUB_SHA \
+          --compress
+        docker images
+    - name: Run tests
+      run: |
+        docker run --rm -v $PWD:$PWD -w $PWD pyhf/pyhf-validation-root-base:$GITHUB_SHA -c "python tests/rf308_normintegration2d.py"
