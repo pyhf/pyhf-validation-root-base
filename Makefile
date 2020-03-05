@@ -15,11 +15,6 @@ run:
 	docker run --rm -it pyhf/pyhf-validation-root-base:latest
 
 test:
-	# Import order safe
-	docker run \
-		--rm \
-		pyhf/pyhf-validation-root-base:latest \
-		-c "python -m pip install numpy; python -c 'import ROOT; import numpy as np'"
 	# Can run RooFit
 	docker run \
 		--rm \
@@ -27,3 +22,12 @@ test:
 		-w $(shell pwd) \
 		pyhf/pyhf-validation-root-base:latest \
 		-c "python -m pip install numpy; python tests/rf308_normintegration2d.py"
+	# Import order safe
+	docker run \
+		--rm \
+		pyhf/pyhf-validation-root-base:latest \
+		-c "python -m pip install numpy; python -c 'import numpy as np; import ROOT; print(np.arange(10))'"
+	docker run \
+		--rm \
+		pyhf/pyhf-validation-root-base:latest \
+		-c "python -m pip install numpy; python -c 'import ROOT; import numpy as np; print(np.arange(10))'"
