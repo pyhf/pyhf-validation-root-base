@@ -8,7 +8,6 @@ FROM base as builder
 ARG ROOT_VERSION=6.20.00
 
 # As this is builder can split up RUNs to make debugging easier
-# Import order matters in broken build, so have ROOT know about NumPy
 RUN apt-get -qq -y update && \
     apt-get -qq -y install \
       gcc \
@@ -28,9 +27,7 @@ RUN apt-get -qq -y update && \
       libxpm-dev \
       libz-dev && \
     apt-get -y autoclean && \
-    apt-get -y autoremove && \
-    python3 -m pip install --no-cache-dir --upgrade pip setuptools wheel && \
-    python3 -m pip install --no-cache-dir numpy
+    apt-get -y autoremove
 # c.f. https://root.cern.ch/building-root#options
 RUN mkdir code && \
     cd code && \
