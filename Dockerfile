@@ -20,7 +20,8 @@ RUN eval "$(python -m conda shell.bash hook)" && \
       qt \
       libllvm9 \
       libclang \
-      pandoc
+      pandoc && \
+    python -m pip freeze | xargs python -m pip uninstall -y
 RUN rm -rf /opt/condaenv/tutorials /opt/condaenv/ui5
 
 FROM base
