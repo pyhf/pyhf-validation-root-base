@@ -21,7 +21,10 @@ RUN eval "$(python -m conda shell.bash hook)" && \
       libllvm9 \
       libclang \
       pandoc && \
-    python -m pip freeze | xargs python -m pip uninstall -y
+    python -m pip freeze > installed.txt && \
+    sed -i "/terminado/d" installed.txt && \
+    sed -i "/xrootd/d" installed.txt && \
+    python -m pip uninstall -y -r installed.txt
 RUN rm -rf /opt/condaenv/tutorials /opt/condaenv/ui5
 
 FROM base
