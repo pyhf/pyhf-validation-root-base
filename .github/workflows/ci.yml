@@ -1,0 +1,29 @@
+name: CI/CD
+
+on:
+  push:
+  schedule:
+  - cron:  '1 0 * * *'
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@master
+    - name: Build Docker image
+      run: |
+        docker build . \
+          --file Dockerfile \
+          --build-arg BASE_IMAGE=debian:stable-slim \
+          --build-arg ROOT_VERSION=6.20.00 \
+          --build-arg PYTHON_VERSION=3.7 \
+          --tag pyhf/pyhf-validation-root-base:$GITHUB_SHA \
+          --compress
+        docker images
+    - name: Run tests
+      run: |
+        docker run --rm -v $PWD:$PWD -w $PWD pyhf/pyhf-validation-root-base:$GITHUB_SHA -c "python tests/rf308_normintegration2d.py"
+        docker run --rm -v $PWD:$PWD -w $PWD pyhf/pyhf-validation-root-base:$GITHUB_SHA -c "python -m pip install numpy; python tests/test_import_numpy_ROOT.py"
+        docker run --rm -v $PWD:$PWD -w $PWD pyhf/pyhf-validation-root-base:$GITHUB_SHA -c "python -m pip install numpy; python tests/test_import_ROOT_numpy.py"
