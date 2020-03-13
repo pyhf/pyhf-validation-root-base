@@ -11,20 +11,18 @@ SHELL [ "/bin/bash", "-c" ]
 RUN conda config --add channels conda-forge && \
     conda config --set allow_softlinks false && \
     conda config --set always_copy true
-RUN conda create --yes --quiet -p /opt/condaenv "root=$ROOT_VERSION" "python=$PYTHON_VERSION"
+RUN conda create --yes --quiet -p /opt/condaenv \
+  "root_base=$ROOT_VERSION" \
+  "python=$PYTHON_VERSION"
 # Forcibly remove some packages to make the final image smaller
+# c.f. https://github.com/conda-forge/root-feedstock/blob/master/recipe/meta.yaml
 RUN eval "$(python -m conda shell.bash hook)" && \
     conda activate /opt/condaenv && \
-    conda remove --yes --force-remove \
-      pythia8 \
-      qt \
-      libllvm9 \
-      libclang \
-      pandoc && \
-    python -m pip freeze > installed.txt && \
-    sed -i "/terminado/d" installed.txt && \
-    sed -i "/xrootd/d" installed.txt && \
-    python -m pip uninstall -y -r installed.txt
+    conda install -y \
+      libblas \
+      libcblas \
+      fftw \
+      zlib
 RUN rm -rf /opt/condaenv/tutorials /opt/condaenv/ui5
 
 FROM base
