@@ -33,6 +33,13 @@ ENV PATH="/opt/condaenv/bin:$PATH"
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
 
+RUN apt-get -qq -y update && \
+    apt-get -qq -y --no-install-recommends install \
+      curl && \
+    apt-get -y autoclean && \
+    apt-get -y autoremove && \
+    rm -rf /var/lib/apt-get/lists/*
+
 WORKDIR /home/data
 ENV HOME /home
 
