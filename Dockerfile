@@ -38,7 +38,7 @@ RUN apt-get -qq -y update && \
       curl && \
     apt-get -y autoclean && \
     apt-get -y autoremove && \
-    rm -rf /var/lib/apt-get/lists/* && \
+    rm -rf /var/lib/apt-get/lists/*
 
 WORKDIR /home/data
 ENV HOME /home
