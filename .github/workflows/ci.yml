@@ -22,6 +22,9 @@ jobs:
           --tag pyhf/pyhf-validation-root-base:$GITHUB_SHA \
           --compress
         docker images
+    - name: Check PATH
+      run: |
+        docker run --rm pyhf/pyhf-validation-root-base:$GITHUB_SHA -c "which python;python --version;which root;root-config --version"
     - name: Run tests
       run: |
         docker run --rm -v $PWD:$PWD -w $PWD pyhf/pyhf-validation-root-base:$GITHUB_SHA -c "python tests/rf308_normintegration2d.py"
