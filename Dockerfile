@@ -12,7 +12,7 @@ RUN conda config --add channels conda-forge && \
     conda config --set allow_softlinks false && \
     conda config --set always_copy true
 RUN conda create --yes --quiet -p /opt/condaenv \
-  "root_base=$ROOT_VERSION" \
+  "root=$ROOT_VERSION" \
   "python=$PYTHON_VERSION"
 # Forcibly remove some packages to make the final image smaller
 # c.f. https://github.com/conda-forge/root-feedstock/blob/master/recipe/meta.yaml
