@@ -24,7 +24,7 @@ jobs:
         docker images
     - name: Check PATH
       run: |
-        docker run --rm pyhf/pyhf-validation-root-base:$GITHUB_SHA -c "which python;python --version;which root;root-config --version"
+        docker run --rm pyhf/pyhf-validation-root-base:$GITHUB_SHA -c "which python;python --version;which root;root-config --version;hist2workspace --help"
     - name: Run tests
       run: |
         docker run --rm -v $PWD:$PWD -w $PWD pyhf/pyhf-validation-root-base:$GITHUB_SHA -c "python tests/rf308_normintegration2d.py"
