@@ -18,11 +18,13 @@ RUN conda create --yes --quiet -p /opt/condaenv \
 # c.f. https://github.com/conda-forge/root-feedstock/blob/master/recipe/meta.yaml
 RUN eval "$(python -m conda shell.bash hook)" && \
     conda activate /opt/condaenv && \
-    conda install -y \
-      libblas \
-      libcblas \
-      fftw \
-      zlib
+    conda remove --yes --force-remove \
+      pythia8 \
+      qt \
+      libllvm9 \
+      libclang \
+      pandoc \
+      xrootd
 RUN rm -rf /opt/condaenv/tutorials /opt/condaenv/ui5
 
 FROM base
