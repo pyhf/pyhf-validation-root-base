@@ -27,3 +27,4 @@ libqt4-dev
 locales
 ccache
 wget
+fonts-freefont-otf
