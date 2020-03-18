@@ -5,9 +5,8 @@ all: image
 image:
 	docker build . \
 	-f Dockerfile \
-	--build-arg BASE_IMAGE=debian:stable-slim \
+	--build-arg BASE_IMAGE=python:3.7-slim \
 	--build-arg ROOT_VERSION=6.20.00 \
-	--build-arg PYTHON_VERSION=3.7 \
 	--tag pyhf/pyhf-validation-root-base:root6.20.00 \
 	--tag pyhf/pyhf-validation-root-base:root6.20.00-python3.7 \
 	--tag pyhf/pyhf-validation-root-base:latest
