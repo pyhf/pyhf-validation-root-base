@@ -11,21 +11,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v2
     - name: Build Docker image
-      run: |
-        docker build . \
-          --file Dockerfile \
-          --build-arg BASE_IMAGE=atlasamglab/stats-base:root6.20.04-python3.7 \
-          --tag pyhf/pyhf-validation-root-base:$GITHUB_SHA \
-          --compress
-        docker images
+      uses: docker/build-push-action@v1
+      with:
+        repository: pyhf/pyhf-validation-root-base
+        dockerfile: Dockerfile
+        tags: test
+        tag_with_sha: true
+        tag_with_ref: true
+        push: false
+    - name: List built images
+      run: docker images
     - name: Check PATH
       run: |
-        docker run --rm pyhf/pyhf-validation-root-base:$GITHUB_SHA -c "which python;python --version;which root;root-config --version;hist2workspace --help"
-        docker run --rm pyhf/pyhf-validation-root-base:$GITHUB_SHA -c "which curl;which tar"
+        docker run --rm pyhf/pyhf-validation-root-base:test "which python;python --version;which root;root-config --version;hist2workspace --help"
+        docker run --rm pyhf/pyhf-validation-root-base:test "which curl;which tar"
     - name: Run tests
       run: |
-        docker run --rm -v $PWD:$PWD -w $PWD pyhf/pyhf-validation-root-base:$GITHUB_SHA -c "python tests/rf308_normintegration2d.py"
-        docker run --rm -v $PWD:$PWD -w $PWD pyhf/pyhf-validation-root-base:$GITHUB_SHA -c "python -m pip install numpy; python tests/test_import_numpy_ROOT.py"
-        docker run --rm -v $PWD:$PWD -w $PWD pyhf/pyhf-validation-root-base:$GITHUB_SHA -c "python -m pip install numpy; python tests/test_import_ROOT_numpy.py"
+        docker run --rm -v $PWD:$PWD -w $PWD pyhf/pyhf-validation-root-base:test "python tests/rf308_normintegration2d.py"
+        docker run --rm -v $PWD:$PWD -w $PWD pyhf/pyhf-validation-root-base:test "python -m pip install numpy; python tests/test_import_numpy_ROOT.py"
+        docker run --rm -v $PWD:$PWD -w $PWD pyhf/pyhf-validation-root-base:test "python -m pip install numpy; python tests/test_import_ROOT_numpy.py"
