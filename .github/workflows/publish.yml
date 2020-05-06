@@ -16,7 +16,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build and Publish to Registry
       if: "!(startsWith(github.ref, 'refs/tags/'))"
-      uses: docker/build-push-action@v1
+      uses: docker/build-push-action@v1.1.0
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
@@ -25,7 +25,7 @@ jobs:
         tags: latest,root6.20.04,root6.20.04-python3.7
     - name: Build and Publish to Registry with Release Tag
       if: startsWith(github.ref, 'refs/tags/')
-      uses: docker/build-push-action@v1
+      uses: docker/build-push-action@v1.1.0
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}

@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build Docker image
-      uses: docker/build-push-action@v1
+      uses: docker/build-push-action@v1.1.0
       with:
         repository: pyhf/pyhf-validation-root-base
         dockerfile: Dockerfile
