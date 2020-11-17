@@ -5,9 +5,9 @@ all: image
 image:
 	docker build . \
 	-f Dockerfile \
-	--build-arg BASE_IMAGE=atlasamglab/stats-base:root6.20.04-python3.7 \
-	--tag pyhf/pyhf-validation-root-base:root6.20.04 \
-	--tag pyhf/pyhf-validation-root-base:root6.20.04-python3.7 \
+	--build-arg BASE_IMAGE=atlasamglab/stats-base:root6.22.02-python3.8 \
+	--tag pyhf/pyhf-validation-root-base:root6.22.02 \
+	--tag pyhf/pyhf-validation-root-base:root6.22.02-python3.8 \
 	--tag pyhf/pyhf-validation-root-base:latest
 
 run:
