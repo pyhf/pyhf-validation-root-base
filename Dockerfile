@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=atlasamglab/stats-base:root6.20.04-python3.7
+ARG BASE_IMAGE=atlasamglab/stats-base:root6.22.02
 FROM ${BASE_IMAGE} as base
 
 RUN apt-get -qq -y update && \
@@ -7,7 +7,7 @@ RUN apt-get -qq -y update && \
       git && \
     apt-get -y autoclean && \
     apt-get -y autoremove && \
-    rm -rf /var/lib/apt-get/lists/*
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /home/data
 ENV HOME /home
